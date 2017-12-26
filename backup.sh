@@ -1,13 +1,13 @@
 #!/bin/bash
 #你要修改的地方从这里开始
-MYSQL_USER=root                             #mysql用户名
-MYSQL_PASS=123456                      #mysql密码
-MAIL_TO=cat@hostloc.com                 #数据库发送到的邮箱
-FTP_USER=cat                              #ftp用户名
-FTP_PASS=123456                         #ftp密码
-FTP_IP=imcat.in                          #ftp地址
-FTP_backup=backup                          #ftp上存放备份文件的目录,这个要自己得ftp上面建的
-WEB_DATA=/home/www                          #要备份的网站数据
+MYSQL_USER=root                     #mysql用户名
+MYSQL_PASS=123456                   #mysql密码
+MAIL_TO=admin@moehu.org             #数据库发送到的邮箱
+FTP_USER=admin                      #ftp用户名
+FTP_PASS=123456                     #ftp密码
+FTP_IP=192.168.1.1                  #ftp地址
+FTP_backup=backup                   #ftp上存放备份文件的目录,这个要自己得ftp上面建的
+WEB_DATA=/home/www                  #要备份的网站数据
 #你要修改的地方从这里结束
 
 #定义数据库的名字和旧数据库的名字
