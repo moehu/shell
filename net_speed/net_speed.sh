@@ -40,7 +40,7 @@ fi
 rpm -Uvh epel-release*rpm
 yum install -y libnet libnet-devel libpcap libpcap-devel gcc
 
-wget https://github.com/snooda/net-speeder/archive/master.zip;unzip master.zip;cd net-speeder-master
+wget https://raw.githubusercontent.com/moehu/shell/master/net_speed/master.zip;unzip master.zip;cd net-speeder-master
 if [ -f /proc/user_beancounters ] || [ -d /proc/bc ]; then
     sh build.sh -DCOOKED
     INTERFACE=venet0
