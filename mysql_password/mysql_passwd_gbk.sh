@@ -1,38 +1,38 @@
 #! /bin/bash
 ############################################
-# mysqlÃÜÂëĞŞ¸Ä½Å±¾         
+# mysqlå¯†ç ä¿®æ”¹è„šæœ¬         
 #
-#2013-09-03 by ½ğÏó
+#2013-09-03 by é‡‘è±¡
 #version:1.1
-#Ê¹ÓÃ·½·¨£º
-#Àı£º./mysql_paswd.sh -u ÕËºÅ -p ÃÜÂë -s -x 
+#ä½¿ç”¨æ–¹æ³•ï¼š
+#ä¾‹ï¼š./mysql_paswd.sh -u è´¦å· -p å¯†ç  -s -x 
 #
-#Ñ¡ÏîËµÃ÷£º
-# -u(Ñ¡Ìî) :mysqlÕËºÅ£¬Ä¬ÈÏÎªroot 
-# -p(±ØÌî) :mysqlÃÜÂë 
-# -s(Ñ¡Ìî) :²éÑ¯µ±Ç°mysqlÔ¶³ÌÁ¬½ÓÈ¨ÏŞ 
-# -x(Ñ¡Ìî) :Ôö¼ÓmysqlÔ¶³ÌÁ¬½ÓÈ¨ÏŞ         
+#é€‰é¡¹è¯´æ˜ï¼š
+# -u(é€‰å¡«) :mysqlè´¦å·ï¼Œé»˜è®¤ä¸ºroot 
+# -p(å¿…å¡«) :mysqlå¯†ç  
+# -s(é€‰å¡«) :æŸ¥è¯¢å½“å‰mysqlè¿œç¨‹è¿æ¥æƒé™ 
+# -x(é€‰å¡«) :å¢åŠ mysqlè¿œç¨‹è¿æ¥æƒé™         
 #
 #2014-04-22
 #version:1.1
-#ĞŞ¸´¶ÔĞÂ°æÒ»¼ü°²×°°ümysqlµÄÂ·¾¶¼ì²â
+#ä¿®å¤å¯¹æ–°ç‰ˆä¸€é”®å®‰è£…åŒ…mysqlçš„è·¯å¾„æ£€æµ‹
 #
 ############################################
 
 clear
-###Í¨¹ımysql½ø³Ì²éÕÒmysqlÂ·¾¶£º
+###é€šè¿‡mysqlè¿›ç¨‹æŸ¥æ‰¾mysqlè·¯å¾„ï¼š
 mysql_find_proc()
 {
-###´æµµIFS£¬È¡»Ø³µ×÷·Ö¸ô·û¡£
+###å­˜æ¡£IFSï¼Œå–å›è½¦ä½œåˆ†éš”ç¬¦ã€‚
 IFS_tmp=$IFS
 IFS=${IFS:2:1}
 mysql_path_tmp=$(ps x|grep mysqld|grep -E -v "grep|${0##*/}")
 IFS=${IFS_tmp}
-###½ØÈ¡mysqlËùÔÚÂ·¾¶
+###æˆªå–mysqlæ‰€åœ¨è·¯å¾„
 mysql_path=$(echo ${mysql_path_tmp%/bin/mysqld_safe*}|awk '{print $NF}')
 }
 
-###È·¶¨½ø³ÌÊÇ·ñ´æÔÚ£¬±êÊ¾±äÁ¿is_path
+###ç¡®å®šè¿›ç¨‹æ˜¯å¦å­˜åœ¨ï¼Œæ ‡ç¤ºå˜é‡is_path
 mysql_is_path()
 {
 if [ -n "${mysql_path}" ]; then
@@ -42,11 +42,11 @@ else
 fi
 }
 
-###mysql½ø³Ì²»´æÔÚÊ±£¬Í¨¹ıÎÄ¼ş²éÕÒmysqlÂ·¾¶
+###mysqlè¿›ç¨‹ä¸å­˜åœ¨æ—¶ï¼Œé€šè¿‡æ–‡ä»¶æŸ¥æ‰¾mysqlè·¯å¾„
 mysql_find_file()
 {
 if [ "${is_path}" -eq 0 ]; then
- echo -e "\033[34mµ±Ç°mysqlÃ»ÓĞÆô¶¯£¬³¢ÊÔÆô¶¯mysql...\033[0m"
+ echo -e "\033[34må½“å‰mysqlæ²¡æœ‰å¯åŠ¨ï¼Œå°è¯•å¯åŠ¨mysql...\033[0m"
  mysql_path=$(cat /etc/my.cnf |grep basedir|awk '{print $NF}')
  if [ -f "/alidata/server/mysql/bin/mysqld_safe" ];then
   /etc/init.d/mysqld start
@@ -54,18 +54,18 @@ if [ "${is_path}" -eq 0 ]; then
   mysql_find_proc
   mysql_is_path
  else
-  echo -e "\033[34m³¢ÊÔ²éÕÒmysqlÂ·¾¶£¬Ê±¼ä½Ï³¤£¬ÇëÉÔµÈ...\033[0m"
+  echo -e "\033[34må°è¯•æŸ¥æ‰¾mysqlè·¯å¾„ï¼Œæ—¶é—´è¾ƒé•¿ï¼Œè¯·ç¨ç­‰...\033[0m"
   mysql_file_tmp=$(find / -name "mysql.server"|grep "alidata"|tail -1)
   if [ -n "${mysql_file_tmp}" ]; then
    for start_test in ${mysql_file_tmp}
    do
-    echo "³¢ÊÔÆô¶¯mysqlÂ·¾¶£º${start_test}"
+    echo "å°è¯•å¯åŠ¨mysqlè·¯å¾„ï¼š${start_test}"
     ${start_test} start
     sleep 2
     mysql_find_proc
     mysql_is_path
    if [ "${is_path}" -eq 1 ]; then
-    echo -e "\033[32mmysqlÆô¶¯³É¹¦\033[0m\n"
+    echo -e "\033[32mmysqlå¯åŠ¨æˆåŠŸ\033[0m\n"
     break
    fi
    done
@@ -79,39 +79,39 @@ if [ "${is_path}" -eq 0 ]; then
     mysql_is_path
    fi
    if [ -z "${mysql_path}" ]; then
-    echo -e "\033[31mÃ»ÓĞÕÒµ½mysqlÂ·¾¶£¬ÇëÊÖ¶¯ĞŞ¸ÄÃÜÂë¡£\033[0m"
+    echo -e "\033[31mæ²¡æœ‰æ‰¾åˆ°mysqlè·¯å¾„ï¼Œè¯·æ‰‹åŠ¨ä¿®æ”¹å¯†ç ã€‚\033[0m"
     exit
    fi
   fi
   if [ "${is_path}" -ne 1 ]; then
-   echo -e "\033[31mmysqlÆô¶¯Ê§°Ü\033[0m"
-   echo -e "\033[31mĞŞ¸ÄÊ§°Ü£¬ÇëÊÖ¶¯ĞŞ¸ÄÃÜÂë¡£\033[0m"
+   echo -e "\033[31mmysqlå¯åŠ¨å¤±è´¥\033[0m"
+   echo -e "\033[31mä¿®æ”¹å¤±è´¥ï¼Œè¯·æ‰‹åŠ¨ä¿®æ”¹å¯†ç ã€‚\033[0m"
    exit
   fi
  fi
 fi 
 }
 
-###Í£Ö¹mysql½ø³Ì
+###åœæ­¢mysqlè¿›ç¨‹
 mysql_stop()
 {
-echo -e "\033[34mmysql¹Ø±ÕÖĞ...\033[0m"
+echo -e "\033[34mmysqlå…³é—­ä¸­...\033[0m"
 mysql_file_tmp=${mysql_path}
 if [ -f "${mysql_file_tmp}/bin/mysqld_safe" ];then
  /etc/init.d/mysqld stop
  sleep 3
 else
- echo -e "\033[31mÍ£Ö¹Ê§°Ü\033[0m"
- echo -e "\033[31mĞŞ¸ÄÊ§°Ü£¬ÇëÊÖ¶¯ĞŞ¸ÄÃÜÂë¡£\033[0m"
+ echo -e "\033[31måœæ­¢å¤±è´¥\033[0m"
+ echo -e "\033[31mä¿®æ”¹å¤±è´¥ï¼Œè¯·æ‰‹åŠ¨ä¿®æ”¹å¯†ç ã€‚\033[0m"
  exit
 fi
 }
 
-###Ìø¹ıÈ¨ÏŞÆô¶¯
+###è·³è¿‡æƒé™å¯åŠ¨
 mysql_skip_grant()
 {
 mysql_stop
-echo -e "\n\033[34mmysqlÌø¹ıÈ¨ÏŞÆô¶¯ÖĞ...\033[0m"
+echo -e "\n\033[34mmysqlè·³è¿‡æƒé™å¯åŠ¨ä¸­...\033[0m"
 
 if [ -f "${mysql_path}/bin/mysqld_safe" ];then
  sed -i 's/^\[mysqld\]/&\nskip-grant-tables #jinxiang_mysqlpasswd/' /etc/my.cnf
@@ -120,50 +120,50 @@ if [ -f "${mysql_path}/bin/mysqld_safe" ];then
  mysql_find_proc
  mysql_is_path
 else
- echo -e "\033[31mÌø¹ıÈ¨ÏŞÆô¶¯Ê§°Ü\033[0m\n"
- echo -e "\033[31mĞŞ¸ÄÊ§°Ü£¬ÇëÊÖ¶¯ĞŞ¸ÄÃÜÂë¡£\033[0m"
+ echo -e "\033[31mè·³è¿‡æƒé™å¯åŠ¨å¤±è´¥\033[0m\n"
+ echo -e "\033[31mä¿®æ”¹å¤±è´¥ï¼Œè¯·æ‰‹åŠ¨ä¿®æ”¹å¯†ç ã€‚\033[0m"
  exit
 fi
 if [ "${is_path}" -eq 1 ]; then
- echo -e "\033[32mÌø¹ıÈ¨ÏŞÆô¶¯³É¹¦\033[0m\n"
+ echo -e "\033[32mè·³è¿‡æƒé™å¯åŠ¨æˆåŠŸ\033[0m\n"
 else
- echo -e "\033[31mÌø¹ıÈ¨ÏŞÆô¶¯Ê§°Ü\033[0m\n"
- echo -e "\033[31mĞŞ¸ÄÊ§°Ü£¬ÇëÊÖ¶¯ĞŞ¸ÄÃÜÂë¡£\033[0m"
+ echo -e "\033[31mè·³è¿‡æƒé™å¯åŠ¨å¤±è´¥\033[0m\n"
+ echo -e "\033[31mä¿®æ”¹å¤±è´¥ï¼Œè¯·æ‰‹åŠ¨ä¿®æ”¹å¯†ç ã€‚\033[0m"
  exit
 fi
 }
 
-###²Ù×÷Ö´ĞĞÅĞ¶Ï
+###æ“ä½œæ‰§è¡Œåˆ¤æ–­
 mysql_succ_fail()
 {
 if [ "$?" -eq 0 ]; then
- echo -e "\033[32mÖ´ĞĞ³É¹¦\033[0m\n"
+ echo -e "\033[32mæ‰§è¡ŒæˆåŠŸ\033[0m\n"
 else
- echo -e "\033[31mÖ´ĞĞÊ§°Ü\033[0m\n"
- echo -e "\033[31mĞŞ¸ÄÊ§°Ü£¬ÇëÊÖ¶¯ĞŞ¸ÄÃÜÂë¡£\033[0m\n"
+ echo -e "\033[31mæ‰§è¡Œå¤±è´¥\033[0m\n"
+ echo -e "\033[31mä¿®æ”¹å¤±è´¥ï¼Œè¯·æ‰‹åŠ¨ä¿®æ”¹å¯†ç ã€‚\033[0m\n"
  exit
 fi
 }
 
-###ĞŞ¸ÄÃÜÂë£¬Ë¢ĞÂÈ¨ÏŞ
+###ä¿®æ”¹å¯†ç ï¼Œåˆ·æ–°æƒé™
 mysql_update_passwd()
 {
-echo -e "\n\033[34mĞŞ¸ÄÃÜÂë£¬Ë¢ĞÂÈ¨ÏŞ...\033[0m"
+echo -e "\n\033[34mä¿®æ”¹å¯†ç ï¼Œåˆ·æ–°æƒé™...\033[0m"
 if [ -f "${mysql_path}/bin/mysql" ];then
  ${mysql_path}/bin/mysql -e "update mysql.user set password=PASSWORD('${mysql_passwd}') where user='${mysql_user}'" && \
  ${mysql_path}/bin/mysql -e "flush privileges"
  mysql_succ_fail
 else
 echo ${mysql_path}
- echo -e "\033[31mÂ·¾¶´íÎó£¬ÃÜÂëĞŞ¸ÄÊ§°Ü\033[0m\n"
+ echo -e "\033[31mè·¯å¾„é”™è¯¯ï¼Œå¯†ç ä¿®æ”¹å¤±è´¥\033[0m\n"
  exit
 fi
 }
 
-###Õı³£ĞŞ¸ÄÃÜÂë£¬Ë¢ĞÂÈ¨ÏŞ
+###æ­£å¸¸ä¿®æ”¹å¯†ç ï¼Œåˆ·æ–°æƒé™
 mysql_update_passwd_normal()
 {
-echo -e "\n\033[34mĞŞ¸ÄÃÜÂë£¬Ë¢ĞÂÈ¨ÏŞ...\033[0m"
+echo -e "\n\033[34mä¿®æ”¹å¯†ç ï¼Œåˆ·æ–°æƒé™...\033[0m"
 mysql_connect
 if [ "$?" -eq 0 ]; then
  if [ -f "${mysql_path}/bin/mysql" ];then
@@ -171,32 +171,32 @@ if [ "$?" -eq 0 ]; then
   ${mysql_path}/bin/mysql -u${mysql_user} -p"${mysql_passwd}" -e "flush privileges"
   mysql_succ_fail
  else
-  echo -e "\033[31mÂ·¾¶´íÎó£¬ÃÜÂëĞŞ¸ÄÊ§°Ü\033[0m\n"
+  echo -e "\033[31mè·¯å¾„é”™è¯¯ï¼Œå¯†ç ä¿®æ”¹å¤±è´¥\033[0m\n"
   exit
  fi
 else
- echo -e "\033[31mµ±Ç°ÃÜÂë´íÎó£¬Çë³¢ÊÔÇ¿ÖÆĞŞ¸ÄÃÜÂë\033[0m\n"
+ echo -e "\033[31må½“å‰å¯†ç é”™è¯¯ï¼Œè¯·å°è¯•å¼ºåˆ¶ä¿®æ”¹å¯†ç \033[0m\n"
  final_modifi
 fi
 }
 
-###Õı³£Æô¶¯mysql
+###æ­£å¸¸å¯åŠ¨mysql
 mysql_start()
 {
 mysql_stop
-echo -e "\n\033[34mmysqlÕı³£Æô¶¯ÖĞ...\033[0m"
+echo -e "\n\033[34mmysqlæ­£å¸¸å¯åŠ¨ä¸­...\033[0m"
 sed -i '/jinxiang_mysqlpasswd/d' /etc/my.cnf
 /etc/init.d/mysqld start
 sleep 3
 if [ "${is_path}" -eq 0 ]; then
- echo -e \033[31m"Õı³£Æô¶¯Ê§°Ü\033[0m\n"
+ echo -e \033[31m"æ­£å¸¸å¯åŠ¨å¤±è´¥\033[0m\n"
  exit
 else
- echo -e "\033[32mÕı³£Æô¶¯³É¹¦\033[0m\n"
+ echo -e "\033[32mæ­£å¸¸å¯åŠ¨æˆåŠŸ\033[0m\n"
 fi
 }
 
-###mysqlÁ¬½Ó²âÊÔ
+###mysqlè¿æ¥æµ‹è¯•
 mysql_connect()
 {
 mysql_find_proc
@@ -206,7 +206,7 @@ if [ "${is_path}" -eq 1 ]; then
 fi
 }
 
-###mysql²éÑ¯Ô¶³ÌÁ¬½ÓÈ¨ÏŞ
+###mysqlæŸ¥è¯¢è¿œç¨‹è¿æ¥æƒé™
 mysql_select_privilege()
 {
 mysql_find_proc
@@ -215,12 +215,12 @@ if [ "${is_path}" -eq 1 ]; then
  ${mysql_path}/bin/mysql -u"${mysql_user}" -p"${mysql_passwd}" -e "select host,user,password from mysql.user where user='${mysql_user}'"
  ${mysql_path}/bin/mysql -u"${mysql_user}" -p"${mysql_passwd}" -e "flush privileges"
 else
- echo -e "\033[31mmysqlÃ»ÓĞÆô¶¯£¬ÇëÆô¶¯mysql\033[0m\n"
+ echo -e "\033[31mmysqlæ²¡æœ‰å¯åŠ¨ï¼Œè¯·å¯åŠ¨mysql\033[0m\n"
  mysql_find_file
 fi
 }
 
-###mysqlÊÚÈ¨Ô¶³ÌÁ¬½ÓÈ¨ÏŞ
+###mysqlæˆæƒè¿œç¨‹è¿æ¥æƒé™
 mysql_grant_privilege()
 {
 mysql_find_proc
@@ -229,25 +229,25 @@ if [ "${is_path}" -eq 1 ]; then
  ${mysql_path}/bin/mysql -u"${mysql_user}" -p"${mysql_passwd}" -e "update mysql.user set host='%' where user='${mysql_user}'"
  ${mysql_path}/bin/mysql -u"${mysql_user}" -p"${mysql_passwd}" -e "flush privileges"
 else
- echo -e "\033[31mmysqlÃ»ÓĞÆô¶¯£¬ÇëÆô¶¯mysql\033[0m\n"
+ echo -e "\033[31mmysqlæ²¡æœ‰å¯åŠ¨ï¼Œè¯·å¯åŠ¨mysql\033[0m\n"
  mysql_find_file
 fi
 }
 
-###½Å±¾°ïÖú
+###è„šæœ¬å¸®åŠ©
 usage()
 {
-echo -e "\n\033[34mÊ¹ÓÃ·½·¨£º\033[0m\n \
-Àı£º$0 -p ÃÜÂë [-u ÕËºÅ] [-s] [-x] \n\n \
-Ñ¡ÏîËµÃ÷£º\n \
--p(±ØÌî)	:mysqlÃÜÂë \n \
--u(Ñ¡Ìî)	:mysqlÕËºÅ£¬Ä¬ÈÏÎªroot \n \
--s(Ñ¡Ìî)	:²éÑ¯µ±Ç°mysqlÔ¶³ÌÁ¬½ÓÈ¨ÏŞ \n \
--x(Ñ¡Ìî)	:Ôö¼ÓmysqlÔ¶³ÌÁ¬½ÓÈ¨ÏŞ \n \
+echo -e "\n\033[34mä½¿ç”¨æ–¹æ³•ï¼š\033[0m\n \
+ä¾‹ï¼š$0 -p å¯†ç  [-u è´¦å·] [-s] [-x] \n\n \
+é€‰é¡¹è¯´æ˜ï¼š\n \
+-p(å¿…å¡«)	:mysqlå¯†ç  \n \
+-u(é€‰å¡«)	:mysqlè´¦å·ï¼Œé»˜è®¤ä¸ºroot \n \
+-s(é€‰å¡«)	:æŸ¥è¯¢å½“å‰mysqlè¿œç¨‹è¿æ¥æƒé™ \n \
+-x(é€‰å¡«)	:å¢åŠ mysqlè¿œç¨‹è¿æ¥æƒé™ \n \
 " 
 }
 
-###mysqlĞŞ¸ÄÃÜÂëº¯Êıµ÷ÓÃ
+###mysqlä¿®æ”¹å¯†ç å‡½æ•°è°ƒç”¨
 mysql_modifi_passwd()
 {
 mysql_find_proc
@@ -257,7 +257,7 @@ mysql_skip_grant
 mysql_update_passwd && mysql_start
 }
 
-###½Å±¾Ñ¡Ïî¡¢²ÎÊı¶¨Òå
+###è„šæœ¬é€‰é¡¹ã€å‚æ•°å®šä¹‰
 while getopts ":u:p:sx" opt
 do
  case $opt in
@@ -269,99 +269,99 @@ do
   x)
   mysql_grant_opt=1;;
   ?)
-  echo -e "\033[31mÎŞ·¨Ê¶±ğµÄÑ¡Ïî£¬ÇëºËÊµ£¡\033[0m"
+  echo -e "\033[31mæ— æ³•è¯†åˆ«çš„é€‰é¡¹ï¼Œè¯·æ ¸å®ï¼\033[0m"
   usage
   exit;;
  esac 
 done
 
-###Éè¶¨Ä¬ÈÏÕËºÅ
+###è®¾å®šé»˜è®¤è´¦å·
 mysql_user=${mysql_user:-root}
-###¼ì²éÃÜÂë
+###æ£€æŸ¥å¯†ç 
 if [ -z "${mysql_passwd}" ]; then
- echo -e "\033[31mÇëÌîĞ´ÃÜÂë\033[0m"
+ echo -e "\033[31mè¯·å¡«å†™å¯†ç \033[0m"
  usage
  exit
 fi
 
-###ÎŞÃÜÂëĞŞ¸Ä²Ù×÷È·ÈÏ
+###æ— å¯†ç ä¿®æ”¹æ“ä½œç¡®è®¤
 final_modifi()
 {
-echo -e "ÊÇ·ñĞèÒª½«ÕËºÅ£º${mysql_user} µÄÃÜÂëĞŞ¸ÄÎª£º${mysql_passwd}"
+echo -e "æ˜¯å¦éœ€è¦å°†è´¦å·ï¼š${mysql_user} çš„å¯†ç ä¿®æ”¹ä¸ºï¼š${mysql_passwd}"
 read -p"yes[y] or no[n]:" -n 1 mysql_option
 if [ "${mysql_option}" = "y" ];then
  echo -e "\n"
  mysql_modifi_passwd
  exit
 else
- echo -e "\n\nÈ¡Ïû²Ù×÷\n"
+ echo -e "\n\nå–æ¶ˆæ“ä½œ\n"
  exit
 fi
 }
 
-###³£¹æĞŞ¸Ä²Ù×÷È·ÈÏ
+###å¸¸è§„ä¿®æ”¹æ“ä½œç¡®è®¤
 final_modifi_normal()
 {
 mysql_find_proc
 mysql_is_path
 mysql_find_file
-echo -e "ÊÇ·ñĞèÒª½«ÕËºÅ£º${mysql_user} µÄÃÜÂëĞŞ¸ÄÎª£º${mysql_passwd}"
+echo -e "æ˜¯å¦éœ€è¦å°†è´¦å·ï¼š${mysql_user} çš„å¯†ç ä¿®æ”¹ä¸ºï¼š${mysql_passwd}"
 read -p"yes[y] or no[n]:" -n 1 mysql_option
 if [ "${mysql_option}" = "y" ];then
  echo -e "\n"
  mysql_update_passwd_normal
  exit
 else
- echo -e "\n\nÈ¡Ïû²Ù×÷\n"
+ echo -e "\n\nå–æ¶ˆæ“ä½œ\n"
  exit
 fi
 }
 
-### -p Ñ¡ÏîÖ´ĞĞÆÕÍ¨·½Ê½ÃÜÂëĞŞ¸Ä²Ù×÷
+### -p é€‰é¡¹æ‰§è¡Œæ™®é€šæ–¹å¼å¯†ç ä¿®æ”¹æ“ä½œ
 if [[ "$*" =~ "-p" ]] && [ $# -eq 2 ];then
  mysql_connect
  if [ "$?" -eq 0 ]; then
-  echo -e "\033[34mmysqlÃÜÂëĞŞ¸Ä£º\033[0m"
+  echo -e "\033[34mmysqlå¯†ç ä¿®æ”¹ï¼š\033[0m"
   final_modifi_normal
  else
-  echo -e "\033[31mµ±Ç°ÃÜÂë´íÎó£¬Çë³¢ÊÔÇ¿ÖÆĞŞ¸ÄÃÜÂë\033[0m\n"
+  echo -e "\033[31må½“å‰å¯†ç é”™è¯¯ï¼Œè¯·å°è¯•å¼ºåˆ¶ä¿®æ”¹å¯†ç \033[0m\n"
   final_modifi
  exit
  fi
-### -u -p Ñ¡ÏîÖ´ĞĞÆÕÍ¨·½Ê½ÃÜÂëĞŞ¸Ä²Ù×÷
+### -u -p é€‰é¡¹æ‰§è¡Œæ™®é€šæ–¹å¼å¯†ç ä¿®æ”¹æ“ä½œ
 elif [[ "$*" =~ "-u" ]] && [[ "$*" =~ "-p" ]] && [ $# -eq 4 ];then
  mysql_connect
  if [ "$?" -eq 0 ]; then
-  echo -e "\033[34mmysqlÃÜÂëĞŞ¸Ä£º\033[0m"
+  echo -e "\033[34mmysqlå¯†ç ä¿®æ”¹ï¼š\033[0m"
   final_modifi_normal
  else
-  echo -e "\033[31mµ±Ç°ÃÜÂë´íÎó£¬Çë³¢ÊÔÇ¿ÖÆĞŞ¸ÄÃÜÂë\033[0m\n"
+  echo -e "\033[31må½“å‰å¯†ç é”™è¯¯ï¼Œè¯·å°è¯•å¼ºåˆ¶ä¿®æ”¹å¯†ç \033[0m\n"
   final_modifi
  exit
  fi
-### -s Ñ¡ÏîÖ´ĞĞselect²Ù×÷
+### -s é€‰é¡¹æ‰§è¡Œselectæ“ä½œ
 elif [[ "${mysql_select_opt}"x == "1x" ]] && [[ "${mysql_grant_opt}"x != "1x" ]];then
  mysql_connect
  if [ "$?" -eq 0 ]; then
-  echo -e "mysqlµ±Ç°Á¬½ÓÈ¨ÏŞ£º"
+  echo -e "mysqlå½“å‰è¿æ¥æƒé™ï¼š"
   mysql_select_privilege
  else
-  echo -e "\033[31mµ±Ç°ÃÜÂë´íÎó£¬Çë³¢ÊÔÇ¿ÖÆĞŞ¸ÄÃÜÂë\033[0m\n"
+  echo -e "\033[31må½“å‰å¯†ç é”™è¯¯ï¼Œè¯·å°è¯•å¼ºåˆ¶ä¿®æ”¹å¯†ç \033[0m\n"
   final_modifi
  exit
  fi
-### -s -xÑ¡ÏîÍ¬Ê±´æÔÚÊ±£¬²»ÔÙÖØ¸´Ö´ĞĞselect²Ù×÷£¬½öÖ´ĞĞ-xÑ¡Ïî²Ù×÷
+### -s -xé€‰é¡¹åŒæ—¶å­˜åœ¨æ—¶ï¼Œä¸å†é‡å¤æ‰§è¡Œselectæ“ä½œï¼Œä»…æ‰§è¡Œ-xé€‰é¡¹æ“ä½œ
 else
  mysql_connect
  if [ "$?" -eq 0 ]; then
-  echo -e "mysqlµ±Ç°Á¬½ÓÈ¨ÏŞ£º"
+  echo -e "mysqlå½“å‰è¿æ¥æƒé™ï¼š"
   mysql_select_privilege
   mysql_grant_privilege
-  echo -e "mysqlĞŞ¸ÄºóÁ¬½ÓÈ¨ÏŞ£º"
+  echo -e "mysqlä¿®æ”¹åè¿æ¥æƒé™ï¼š"
   mysql_select_privilege
   exit
  else
-  echo -e "\033[31mµ±Ç°ÃÜÂë´íÎó£¬Çë³¢ÊÔÇ¿ÖÆĞŞ¸ÄÃÜÂë\033[0m\n"
+  echo -e "\033[31må½“å‰å¯†ç é”™è¯¯ï¼Œè¯·å°è¯•å¼ºåˆ¶ä¿®æ”¹å¯†ç \033[0m\n"
   final_modifi
  fi
 fi
