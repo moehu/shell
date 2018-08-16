@@ -4,7 +4,7 @@ wget wget -c https://raw.githubusercontent.com/1265578519/kangle/master/php/7.1/
 tar xjf php-7.1.13.tar.bz2
 cd /root/php-7.1.13/ext/fileinfo
 /vhs/kangle/ext/tpl_php7113/bin/phpize
-./configure -with-php-config=/vhs/kangle/ext/tpl_php7113//bin/php-config --enable-fileinfo
+./configure -with-php-config=/vhs/kangle/ext/tpl_php7113/bin/php-config --enable-fileinfo
 make && make install
 cd /vhs/kangle/ext/tpl_php7113
 rm -rf php-templete.ini
