@@ -1,5 +1,4 @@
 #!/bin/sh
-PREFIX="/vhs/kangle/ext/tpl_php7113"
 wget wget -c https://raw.githubusercontent.com/1265578519/kangle/master/php/7.1/7113/php-7.1.13.tar.bz2 -O php-7.1.13.tar.bz2
 tar xjf php-7.1.13.tar.bz2
 cd /root/php-7.1.13/ext/fileinfo
